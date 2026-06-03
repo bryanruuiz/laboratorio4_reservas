@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_lab4
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${DB_PASSWORD}
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - app_network
+
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: sqlserver_init
+    depends_on:
+      - db
+    volumes:
+      - ./init.sql:/init.sql
+    networks:
+      - app_network
+    # Inyectamos la contraseña como variable en el comando de bash
+    command: /bin/bash -c "sleep 15 && /opt/mssql-tools/bin/sqlcmd -S db -U sa -P '${DB_PASSWORD}' -i /init.sql"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: fastapi_lab4
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - "8000:8000"
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: react_lab4
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "5173:4173"
+    networks:
+      - app_network
+
+volumes:
+  sqlserver_data:
+
+networks:
+  app_network:
+    driver: bridge
