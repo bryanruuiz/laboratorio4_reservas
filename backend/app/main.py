@@ -32,7 +32,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 app.include_router(auth.router)
 app.include_router(usuarios.router)

@@ -1,8 +1,4 @@
-"""Script para crear el administrador inicial.
-
-Uso:
-    python seed_admin.py
-"""
+"""Script para crear el administrador inicial."""
 from app.db import Base, SessionLocal, engine
 from app.models import usuario, espacio, reserva  # noqa: F401
 from app.crud import usuarios as crud_usuarios
