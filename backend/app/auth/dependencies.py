@@ -43,6 +43,13 @@ def get_current_user(
     if usuario is None:
         raise credentials_exception
 
+    if getattr(usuario, "estado", "activo") == "inactivo":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tu cuenta está inactiva. Contacta al administrador.",
+            headers={"WWW-Authenticate": authenticate_value},
+        )
+
     for scope in security_scopes.scopes:
         if scope not in token_scopes:
             raise HTTPException(

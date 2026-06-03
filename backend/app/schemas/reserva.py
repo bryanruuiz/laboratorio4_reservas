@@ -16,11 +16,26 @@ class ReservaCreate(ReservaBase):
     nombre_espacio: str = Field(..., min_length=1, max_length=150)
 
 
+class EspacioEnReserva(BaseModel):
+    nombre: str
+
+    model_config = {"from_attributes": True}
+
+
+class UsuarioEnReserva(BaseModel):
+    nombre: str
+    correo: str
+
+    model_config = {"from_attributes": True}
+
+
 class ReservaOut(ReservaBase):
     id_reserva: int
     id_usuario: int
     id_espacio: int
     estado: str
+    espacio: EspacioEnReserva
+    usuario: UsuarioEnReserva
 
     model_config = {"from_attributes": True}
 

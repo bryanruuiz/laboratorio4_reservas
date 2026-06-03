@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.models.usuario import Usuario
-from app.schemas.usuario import UsuarioCreate
+from app.schemas.usuario import UsuarioCreate, UsuarioUpdate
 from app.auth.security import hash_password
 
 
@@ -27,8 +27,32 @@ def create(db: Session, data: UsuarioCreate, rol: str = "usuario") -> Usuario:
         correo=data.correo,
         contrasena=hash_password(data.contrasena),
         rol=rol,
+        estado="activo",
     )
     db.add(usuario)
+    db.commit()
+    db.refresh(usuario)
+    return usuario
+
+
+def update(db: Session, usuario: Usuario, data: UsuarioUpdate) -> Usuario:
+    if data.nombre is not None:
+        usuario.nombre = data.nombre
+    if data.correo is not None:
+        usuario.correo = data.correo
+    if data.contrasena is not None:
+        usuario.contrasena = hash_password(data.contrasena)
+    if data.rol is not None:
+        usuario.rol = data.rol
+    if data.estado is not None:
+        usuario.estado = data.estado
+    db.commit()
+    db.refresh(usuario)
+    return usuario
+
+
+def update_estado(db: Session, usuario: Usuario, estado: str) -> Usuario:
+    usuario.estado = estado
     db.commit()
     db.refresh(usuario)
     return usuario

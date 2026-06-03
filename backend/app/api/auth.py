@@ -25,6 +25,12 @@ def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    if usuario.estado == "inactivo":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tu cuenta está inactiva. Contacta al administrador.",
+        )
+
     scopes = ["admin"] if usuario.rol == "admin" else ["usuario"]
     token = create_access_token(
         {

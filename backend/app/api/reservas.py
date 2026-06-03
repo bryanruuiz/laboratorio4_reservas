@@ -113,6 +113,14 @@ def actualizar_estado_reserva(
     reserva = crud_reservas.get_by_id(db, id_reserva)
     if not reserva:
         raise HTTPException(status_code=404, detail="Reserva no encontrada")
+    if reserva.estado != "esperando":
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"Solo se puede aprobar o rechazar una reserva en estado "
+                f"'esperando' (estado actual: '{reserva.estado}')"
+            ),
+        )
     reserva = crud_reservas.actualizar_estado(db, reserva, data.estado)
     return {
         "success": True,
@@ -135,6 +143,14 @@ def cancelar_reserva(
         raise HTTPException(
             status_code=403,
             detail="No tienes permisos para cancelar esta reserva",
+        )
+
+    if reserva.estado not in ("esperando", "aprobada"):
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"No se puede cancelar una reserva en estado '{reserva.estado}'"
+            ),
         )
 
     reserva = crud_reservas.actualizar_estado(db, reserva, "cancelada")

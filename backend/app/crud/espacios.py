@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.models.espacio import Espacio
 from app.models.reserva import Reserva
-from app.schemas.espacio import EspacioCreate
+from app.schemas.espacio import EspacioCreate, EspacioUpdate
 
 ESTADOS_NO_RESERVABLES = ("inactivo", "en mantenimiento", "no disponible")
 
@@ -25,6 +25,15 @@ def list_all(db: Session) -> list[Espacio]:
 def create(db: Session, data: EspacioCreate) -> Espacio:
     espacio = Espacio(**data.model_dump())
     db.add(espacio)
+    db.commit()
+    db.refresh(espacio)
+    return espacio
+
+
+def update(db: Session, espacio: Espacio, data: EspacioUpdate) -> Espacio:
+    cambios = data.model_dump(exclude_unset=True)
+    for campo, valor in cambios.items():
+        setattr(espacio, campo, valor)
     db.commit()
     db.refresh(espacio)
     return espacio

@@ -5,6 +5,8 @@ from app.db import Base, engine
 from app.models import usuario, espacio, reserva  # noqa: F401  (registrar modelos)
 from app.api import auth, usuarios, espacios, reservas
 
+import os
+
 app = FastAPI(
     title="Sistema de Reservas Institucionales",
     description=(
@@ -14,12 +16,20 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Orígenes permitidos (configurables por variable de entorno CORS_ORIGINS,
+# separados por coma). Por defecto, solo el frontend de desarrollo local.
+_origins = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+).split(",")
+allowed_origins = [o.strip() for o in _origins if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=allowed_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 Base.metadata.create_all(bind=engine)

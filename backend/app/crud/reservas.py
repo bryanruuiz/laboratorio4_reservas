@@ -1,21 +1,37 @@
 from datetime import date, time
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.models.reserva import Reserva
 from app.schemas.reserva import ReservaCreate
 
 
 def get_by_id(db: Session, id_reserva: int) -> Reserva | None:
-    return db.query(Reserva).filter(Reserva.id_reserva == id_reserva).first()
+    return (
+        db.query(Reserva)
+        .options(joinedload(Reserva.espacio), joinedload(Reserva.usuario))
+        .filter(Reserva.id_reserva == id_reserva)
+        .first()
+    )
 
 
 def list_all(db: Session) -> list[Reserva]:
-    return db.query(Reserva).all()
+    return (
+        db.query(Reserva)
+        .options(joinedload(Reserva.espacio), joinedload(Reserva.usuario))
+        .order_by(Reserva.id_reserva.desc())
+        .all()
+    )
 
 
 def list_by_usuario(db: Session, id_usuario: int) -> list[Reserva]:
-    return db.query(Reserva).filter(Reserva.id_usuario == id_usuario).all()
+    return (
+        db.query(Reserva)
+        .options(joinedload(Reserva.espacio), joinedload(Reserva.usuario))
+        .filter(Reserva.id_usuario == id_usuario)
+        .order_by(Reserva.id_reserva.desc())
+        .all()
+    )
 
 
 def existe_conflicto(

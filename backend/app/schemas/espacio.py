@@ -16,6 +16,13 @@ class EspacioCreate(EspacioBase):
     pass
 
 
+class EspacioUpdate(BaseModel):
+    nombre: Optional[str] = Field(None, min_length=1, max_length=150)
+    ubicacion: Optional[str] = Field(None, min_length=1, max_length=200)
+    capacidad: Optional[int] = Field(None, gt=0)
+    estado: Optional[EstadoEspacio] = None
+
+
 class EspacioOut(EspacioBase):
     id_espacio: int
 
