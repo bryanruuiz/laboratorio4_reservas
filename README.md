@@ -12,9 +12,9 @@ Automatizar y centralizar la reserva de espacios físicos de una institución ed
 
 | Nombre | Rol |
 | --- | --- |
-| Santiago Arenas Herrera | [Rol del integrante 1] |
-| Bryan Alejandro Ruiz Restrepo | [Rol del integrante 2] |
-| Juan Manuel Gallego Rojas | [Rol del integrante 3] |
+| Santiago Arenas Herrera | Documentacion y pruebas |
+| Bryan Alejandro Ruiz Restrepo | Integracion del main y dev |
+| Juan Manuel Gallego Rojas | Despliegue y ops |
 
 ---
 
@@ -296,8 +296,3 @@ Durante el desarrollo de este proyecto, el equipo adquirió aprendizajes signifi
 - Implementar un sistema de reportes y estadísticas de uso por espacio.
 - Migrar la autenticación a un proveedor externo (OAuth 2.0 institucional).
 - Añadir soporte para adjuntar documentos justificativos a la solicitud de reserva.
-
----
-
-> **Documentación técnica completa:** ver [READMEDev.md](READMEDev.md)  
-> **Guía de instalación paso a paso:** ver [INSTALACION.md](INSTALACION.md)
