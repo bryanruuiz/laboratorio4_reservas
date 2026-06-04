@@ -221,9 +221,6 @@ laboratorio4_reservas/
 │           ├── CrearReserva.jsx
 │           └── Usuarios.jsx
 │
-├── READMEdev.md                 # Este documento
-├── READMEops.md                 # Documentación de despliegue
-├── INSTALACION.md               # Guía de instalación
 └── README.md                    # Documentación principal
 ```
 
