@@ -586,9 +586,3 @@ docker compose up --build 2>&1 | tee deploy.log
 ```
 
 Esto muestra los logs en pantalla y los guarda en `deploy.log` para análisis posterior.
-
----
-
-> **Documentación técnica de la aplicación:** ver [READMEDev.md](READMEDev.md)
-> **Manual de usuario:** ver [README.md](README.md)
-> **Guía de instalación en modo desarrollo:** ver [INSTALACION.md](INSTALACION.md)
