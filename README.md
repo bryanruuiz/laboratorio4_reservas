@@ -11,7 +11,7 @@ Automatizar y centralizar la reserva de espacios físicos de una institución ed
 ## 👥 Integrantes del equipo
 
 | Nombre | Rol |
-|---|---|
+| --- | --- |
 | Santiago Arenas Herrera | [Rol del integrante 1] |
 | Bryan Alejandro Ruiz Restrepo | [Rol del integrante 2] |
 | Juan Manuel Gallego Rojas | [Rol del integrante 3] |
@@ -27,7 +27,7 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 ### Funcionalidades principales
 
 | Funcionalidad | Rol requerido |
-|---|---|
+| --- | --- |
 | Registro e inicio de sesión | Todos |
 | Consultar espacios disponibles (con filtros de fecha, hora y aforo) | Autenticado |
 | Crear una solicitud de reserva | Autenticado |
@@ -40,16 +40,16 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 
 ### Reglas de negocio aplicadas automáticamente
 
-- ⏰ **Anticipación mínima:** no se aceptan reservas con menos de 24 horas de anticipación.
-- 🗓️ **Horario institucional:** lunes a viernes de 7:00 a 20:00; sábados de 8:00 a 12:00; domingos no disponibles.
-- 🚫 **Sin solapamiento:** el sistema detecta y rechaza reservas que se crucen en fecha y franja horaria para el mismo espacio.
-- 👥 **Capacidad:** la cantidad de asistentes no puede superar la capacidad del espacio.
-- 🏢 **Estado del espacio:** no se pueden reservar espacios inactivos, en mantenimiento o no disponibles.
-- 🔄 **Flujo de estados:** toda reserva nace en `esperando`; solo un administrador puede pasarla a `aprobada` o `rechazada`.
+- **Anticipación mínima:** no se aceptan reservas con menos de 24 horas de anticipación.
+- **Horario institucional:** lunes a viernes de 7:00 a 20:00; sábados de 8:00 a 12:00; domingos no disponibles.
+- **Sin solapamiento:** el sistema detecta y rechaza reservas que se crucen en fecha y franja horaria para el mismo espacio.
+- **Capacidad:** la cantidad de asistentes no puede superar la capacidad del espacio.
+- **Estado del espacio:** no se pueden reservar espacios inactivos, en mantenimiento o no disponibles.
+- **Flujo de estados:** toda reserva nace en `esperando`; solo un administrador puede pasarla a `aprobada` o `rechazada`.
 
 ---
 
-## 🏗️ Arquitectura general y tecnologías utilizadas
+## Arquitectura general y tecnologías utilizadas
 
 ### Diagrama de arquitectura
 
@@ -68,8 +68,9 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 ### Tecnologías utilizadas
 
 #### Backend
+
 | Tecnología | Uso |
-|---|---|
+| --- | --- |
 | **Python 3.11+** | Lenguaje base |
 | **FastAPI** | Framework web / API REST + Swagger automático |
 | **Uvicorn** | Servidor ASGI |
@@ -81,8 +82,9 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 | **python-dotenv** | Variables de entorno |
 
 #### Frontend
+
 | Tecnología | Uso |
-|---|---|
+| --- | --- |
 | **React 19** | UI basada en componentes |
 | **Vite** | Bundler / servidor de desarrollo |
 | **React Router DOM 7** | Enrutamiento SPA |
@@ -102,10 +104,10 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 │    correo (único)   │          │    ubicacion         │
 │    contrasena (hash)│          │    capacidad         │
 │    rol              │          │    estado            │
-│    estado           │          └──────────┬──────────┘
-└──────────┬──────────┘                     │
-           │ 1:N                          1:N│
-           │         ┌─────────────────────┐│
+│    estado           │          └───────────┬─────────┘
+└──────────┬──────────┘                      │
+           │ 1:N                             │ 1:N
+           │         ┌─────────────────────┐ │
            └────────►│      reservas       │◄┘
                      ├─────────────────────┤
                      │ PK id_reserva       │
@@ -121,7 +123,7 @@ En entornos institucionales, la asignación manual de espacios genera frecuentes
 
 ---
 
-## 🚀 Despliegue con Docker Compose
+## Despliegue con Docker Compose
 
 El proyecto incluye un archivo `docker-compose.yml` que levanta los tres servicios necesarios con un solo comando.
 
@@ -157,22 +159,22 @@ docker compose logs -f
 docker compose down
 ```
 
-> **Rama de operaciones:** el archivo `docker-compose.yml` y la configuración de contenedores se encuentra en la rama **`[nombre-rama-ops]`** del repositorio.
+> **Rama de operaciones:** el archivo `docker-compose.yml` y la configuración de contenedores se encuentra en la rama **`ops`** del repositorio.
 
 ### Acceso a la aplicación
 
-- **Frontend:** http://localhost:5173
-- **Backend (API):** http://localhost:8000
-- **Swagger UI:** http://localhost:8000/docs
+- **Frontend:** <http://localhost:5173>
+- **Backend (API):** <http://localhost:8000>
+- **Swagger UI:** <http://localhost:8000/docs>
 
 ---
 
-## 📖 Tutorial de uso
+## Tutorial de uso
 
 ### Credenciales del administrador inicial
 
 | Campo | Valor |
-|---|---|
+| --- | --- |
 | Correo | `admin@institucion.edu` |
 | Contraseña | `Admin123!` |
 
@@ -180,9 +182,9 @@ docker compose down
 
 ### 1. Inicio de sesión
 
-Accede a http://localhost:5173 e ingresa tus credenciales en el formulario de inicio de sesión.
+Accede a <http://localhost:5173> e ingresa tus credenciales en el formulario de inicio de sesión.
 
-> [Imagen: pantalla de inicio de sesión]
+> ![alt text](Images/image.png)
 
 ---
 
@@ -190,7 +192,7 @@ Accede a http://localhost:5173 e ingresa tus credenciales en el formulario de in
 
 Tras iniciar sesión, el sistema te redirige al **Dashboard** donde puedes ver un resumen de tus reservas activas.
 
-> [Imagen: pantalla del dashboard]
+> ![alt text](Images/image_dashboard.png)
 
 ---
 
@@ -203,9 +205,9 @@ Tras iniciar sesión, el sistema te redirige al **Dashboard** donde puedes ver u
 5. Selecciona un espacio y confirma la reserva.
 6. La reserva quedará en estado **`esperando`** hasta que un administrador la apruebe.
 
-> [Imagen: formulario de creación de reserva]
+![alt text](Images/image_Reserva.png)
 
-> [Imagen: lista de espacios disponibles filtrada]
+![alt text](Images/image_espacios_disponibles.png)
 
 ---
 
@@ -213,7 +215,7 @@ Tras iniciar sesión, el sistema te redirige al **Dashboard** donde puedes ver u
 
 En la sección **Mis Reservas** puedes ver el historial completo de tus solicitudes y su estado actual (`esperando`, `aprobada`, `rechazada`, `cancelada`).
 
-> [Imagen: lista de reservas del usuario]
+![alt text](Images/image_reservas_usuario.png)
 
 ---
 
@@ -221,43 +223,36 @@ En la sección **Mis Reservas** puedes ver el historial completo de tus solicitu
 
 Desde **Mis Reservas**, haz clic en el botón **Cancelar** en cualquier reserva con estado `esperando` o `aprobada`.
 
-> [Imagen: botón de cancelación y confirmación]
+![alt text](Images/image_cancelar_reserva.png)
 
 ---
 
 ### 6. Gestión de espacios (solo Admin)
 
 En la sección **Espacios** el administrador puede:
+
 - **Crear** nuevos espacios con nombre, ubicación, capacidad y estado.
 - **Editar** la información de un espacio existente.
 - **Cambiar el estado** de un espacio (`activo`, `inactivo`, `en mantenimiento`, `no disponible`).
 
-> [Imagen: formulario de creación/edición de espacio]
-
-> [Imagen: listado de espacios con opciones de gestión]
+![alt text](Images/image_espacios_admin.png)
 
 ---
 
-### 7. Gestión de reservas (solo Admin)
-
-En **Reservas**, el administrador visualiza todas las solicitudes del sistema y puede **aprobar** o **rechazar** las que estén en estado `esperando`.
-
-> [Imagen: panel de reservas con opciones de aprobación/rechazo]
-
----
-
-### 8. Gestión de usuarios (solo Admin)
+### 7. Gestión de usuarios (solo Admin)
 
 En **Usuarios**, el administrador puede:
+
 - Ver el listado completo de usuarios registrados.
 - Editar los datos de un usuario (nombre, correo, rol, contraseña).
 - Activar o inactivar una cuenta.
 
-> [Imagen: listado de usuarios con opciones de gestión]
+![alt text](Images/image_usuarios.png)
 
+![alt text](Images/image_editar_usuario.png)
 ---
 
-### 9. Mensajes de error
+### 8. Mensajes de error
 
 El sistema muestra mensajes claros cuando una acción no es válida. Ejemplos:
 
@@ -270,15 +265,12 @@ El sistema muestra mensajes claros cuando una acción no es válida. Ejemplos:
 | Credenciales incorrectas | `"Correo o contraseña incorrectos."` |
 | Usuario inactivo | `"Tu cuenta está inactiva. Contacta al administrador."` |
 
-> [Imagen: ejemplo de mensaje de error en el formulario]
-
----
-
-### 10. Cierre de sesión
-
-Haz clic en el botón **Cerrar sesión** en la barra de navegación. El token JWT se elimina del almacenamiento local y se te redirige al formulario de inicio de sesión.
-
-> [Imagen: opción de cierre de sesión en la barra de navegación]
+![alt text](Images/image_error_reserva.png)
+![alt text](Images/image_error_horario.png)
+![alt text](Images/image_reserva_existente.png)
+![alt text](Images/image_num_asistentes.png)
+![alt text](Images/image_error_login.png)
+![alt text](Images/image_cuenta_inactiva.png)
 
 ---
 
@@ -286,25 +278,24 @@ Haz clic en el botón **Cerrar sesión** en la barra de navegación. El token JW
 
 ### Conclusiones
 
-[Escribe aquí las conclusiones del equipo sobre el proyecto.]
+Este proyecto permitió al equipo afianzar conocimientos en el desarrollo de aplicaciones web completas, abarcando desde la gestión de bases de datos hasta la interfaz de usuario. La integración de diferentes tecnologías (Python, SQL Server, React) bajo un sistema de contenedores (Docker) facilitó el despliegue y la escalabilidad de la solución. Además, se fortaleció la capacidad de trabajo colaborativo, la resolución de problemas técnicos y la aplicación de metodologías de desarrollo ágiles.
 
 ### Dificultades encontradas
 
-[Describe las principales dificultades técnicas u organizativas que el equipo enfrentó durante el desarrollo.]
+En el transcurso del desarrollo del proyecto, surgieron desafíos principalmente relacionados con la integración de los diferentes componentes de la arquitectura. La configuración de la base de datos SQL Server y la correcta conexión con la API de FastAPI requirieron ajustes precisos para asegurar la persistencia y recuperación de datos. Asimismo, la sincronización entre el frontend y el backend presentó dificultades iniciales que se fueron resolviendo mediante la implementación de mecanismos de comunicación robustos y eficientes. Estas dificultades permitieron al equipo desarrollar habilidades de depuración y optimización en entornos distribuidos.
 
 ### Aprendizajes
 
-[Detalla los aprendizajes más importantes obtenidos durante el laboratorio: tecnologías, patrones de diseño, trabajo en equipo, etc.]
+Durante el desarrollo de este proyecto, el equipo adquirió aprendizajes significativos en diversas áreas tecnológicas y metodológicas. En primer lugar, se fortalecieron las competencias en el manejo de bases de datos SQL Server, comprendiendo su arquitectura, consultas avanzadas y administración eficiente. La integración con FastAPI permitió profundizar en el desarrollo de APIs RESTful, implementando autenticación, autorización y manejo de datos de manera segura y escalable. Además, la experiencia con React y Next.js proporcionó conocimientos sólidos en la construcción de interfaces de usuario interactivas y optimizadas para la experiencia del usuario. En el ámbito de la infraestructura, la familiarización con Docker y Docker Compose facilitó la comprensión de los principios de contenedorización y despliegue de aplicaciones en entornos distribuidos. Finalmente, se consolidaron prácticas de trabajo en equipo, planificación de proyectos y resolución colaborativa de problemas.
 
 ### Mejoras futuras
 
-- [ ] Implementar notificaciones por correo electrónico al aprobar/rechazar una reserva.
-- [ ] Agregar una vista de calendario para visualizar la disponibilidad de espacios de forma gráfica.
-- [ ] Permitir reservas recurrentes (semanal, mensual).
-- [ ] Implementar un sistema de reportes y estadísticas de uso por espacio.
-- [ ] Migrar la autenticación a un proveedor externo (OAuth 2.0 institucional).
-- [ ] Añadir soporte para adjuntar documentos justificativos a la solicitud de reserva.
-- [ ] [Otras mejoras que el equipo proponga]
+- Implementar notificaciones por correo electrónico al aprobar/rechazar una reserva.
+- Agregar una vista de calendario para visualizar la disponibilidad de espacios de forma gráfica.
+- Permitir reservas recurrentes (semanal, mensual).
+- Implementar un sistema de reportes y estadísticas de uso por espacio.
+- Migrar la autenticación a un proveedor externo (OAuth 2.0 institucional).
+- Añadir soporte para adjuntar documentos justificativos a la solicitud de reserva.
 
 ---
 
